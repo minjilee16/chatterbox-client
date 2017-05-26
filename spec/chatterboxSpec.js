@@ -80,7 +80,7 @@ describe('chatterbox', function() {
           text: 'Never underestimate the power of the Schwartz!',
           roomname: 'lobby'
         };
-
+        console.log(app);
         app.renderMessage(message);
 
         expect($('#chats').children().length).to.equal(1);
