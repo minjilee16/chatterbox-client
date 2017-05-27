@@ -8,12 +8,29 @@ var message = {
   roomname: undefined
 };
 
-const app = {
-  server: 'http://parse.sfm8.hackreactor.com/chatterbox/classes/messages',
+
+const getText = function (data) {
+  let storage = [];
+  for ( let i = 0; i < data.results.length; i++) {
+    storage.push(data.results[i].text);
+  }
+  return storage;
+};
+
+
+
+class App {
+
+  constructor () {
+    this.server = 'http://parse.sfm8.hackreactor.com/chatterbox/classes/messages',
+    this.friends = {};
+  }
 
   init () {
-
-  },
+    this.fetch();
+    this.clearMessages(); 
+    this.handleUsernameClick(); 
+  }
 
   send(message) {
     $.ajax({
@@ -22,39 +39,68 @@ const app = {
       data: JSON.stringify(message),
       contentType: 'application/json',
       success: function (data) {
-        console.log('chatterbox: Message sent');
+        console.log('chatterbox: Message sent', data);
       },
-      error: function (data) {
+      error: function (err) {
         // See: https://developer.mozilla.org/en-US/docs/Web/API/console.error
-        console.error('chatterbox: Failed to send message', data);
+        console.error('chatterbox: Failed to send message', err);
       }
     });
-  },
+  }
 
   fetch() {
+    let that = this;
+   
     $.ajax({
       url: 'http://parse.sfm8.hackreactor.com/chatterbox/classes/messages',
-      type: 'GET'
+      type: 'GET',
+      // data: JSON.stringify(message),
+      contentType: 'application/json',
+      success: function (data) {
+        let message = getText(data); 
+        for ( let i = 0; i < message.length; i++) {
+          that.renderMessage(message[i]);
+        }
+        console.log('chatterbox: Message received', data);
+      },
+      error: function (err) {
+        // See: https://developer.mozilla.org/en-US/docs/Web/API/console.error
+        console.error('chatterbox: Failed to receive message', err);
+      }
     });
-  },
+  }
+
+  // getText (data) {
+  //   let storage = [];
+  //   for ( let i = 0; i < data.results.length; i++) {
+  //     storage.push(data.results[i].text);
+  //   }
+  //   return storage;
+  // }
 
   clearMessages() {
     $('#chats').empty();
-  },
+  }
 
   renderMessage(message) {
-    //  let newDiv = document.createElement('div');
-    //  let content = document.createTextNode(message.text);
-
-    // newDiv.append(content);
-    // console.log(newDiv);
-    // console.log(content); 
-    // $('#chats').html(newDiv);
-    // let element = document.getElementById('chats');
-    // console.log(element);
-    // element.appendChild(newDiv);
-    // debugger;
     $('#chats').append(`<div>${message.text}</div>`);
   }
 
-};
+  renderRoom(roomName) {
+    $('#roomSelect').append(`<option value=${roomName}>${roomName}</option>`);
+  }
+  
+  handleUsernameClick() {
+    var username = document.getElementsByClassName('username');
+    // username.addEventListener('click', function (name) {
+    //   if (!friends[name]) {
+    //     friends[name] = true; 
+    //   } 
+    // }); 
+  }
+}
+
+
+const app = new App();
+app.init();
+

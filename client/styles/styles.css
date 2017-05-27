@@ -9,7 +9,7 @@ body {
     width: 500px;
     margin: auto;
     text-align: left;
-    background: white;
+    background: pink;
     padding: 50px 60px;
     border: solid #ddd;
     border-width: 0 1px 1px 1px;
@@ -88,3 +88,19 @@ form input[type=text] {
     background-color: #0090da;
 }
 
+#emptyTextBox {
+    width: 300px;
+    height: 20px;
+    background-color: lightyellow;
+    border: solid grey 2px;
+}
+
+#submitButton {
+    background-color: #4CAF50; 
+    border: none;
+    color: white;
+    padding: 7px 15px;
+    text-align: center;
+    font-size: 14px;
+    border-radius: 6px;
+}
