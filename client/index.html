@@ -27,16 +27,19 @@
     <div id="main">
       <h1>chatterbox</h1>
       <!-- Your HTML goes here! -->
-      <div class="username"> </div>
+      <div class="heading"> </div>  
       Room: 
+        
         <select name= "selectRoom">
-        <option value= "lobby" >Lobby </option>
+        <option value= "lobby" >Lobby</option>
         <option value= "testing" >testing </option>
         <option value= "lobby3" >Lobby3 </option> 
       </select>
         <p>
-       <input type='text' id='emptyTextBox'> 
-       <button id='submitButton'>submit</button> 
+      <form class="submitButt">
+       <input type='text' id='emptyTextBox' /> 
+       <input type='button' value='submit' id='submitButton' /> 
+      </form>
         </p>
     </div>
     <div id="chats"></div>
